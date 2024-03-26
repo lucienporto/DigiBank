@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DigiBank.Classes
 {
     public class Layout
     {
+        private static List<Pessoa> pessoas = new List<Pessoa>();
         private static int opcao = 0;
         public static void TelaPrincipal()
         {
@@ -26,26 +24,19 @@ namespace DigiBank.Classes
 
             opcao = int.Parse(Console.ReadLine());
 
-            try
+            switch (opcao)
             {
-                switch (opcao)
-                {
-                    case 1:
-                        CriarConta();
-                        break;
+                case 1:
+                    CriarConta();
+                    break;
 
-                    case 2:
-                        TelaLogin();
-                        break;
+                case 2:
+                    TelaLogin();
+                    break;
 
-                    default:
-                        Console.WriteLine("Opção inválida!");
-                        break;
-                }
-            }
-            catch (FormatException erro) 
-            {
-                Console.WriteLine("Desculpe, aconteceu um erro. Tente novamente mais tarde!" + erro);
+                default:
+                    Console.WriteLine("Opção inválida!");
+                    break;
             }     
         }
 
@@ -65,6 +56,21 @@ namespace DigiBank.Classes
             Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
 
             // Criar uma conta
+            ContaCorrente contaCorrente = new ContaCorrente();
+            Pessoa pessoa = new Pessoa();
+
+            pessoa.SetNome(nome);
+            pessoa.SetCPF(cpf);
+            pessoa.SetSenha(senha);
+            pessoa.Conta = contaCorrente;
+
+            pessoas.Add(pessoa);
+
+            Console.Clear();
+
+            Console.WriteLine("\t\t\t\t\tConta cadastrada com sucesso!\t\t\t\t\t");
+            Console.WriteLine("\t\t\t\t\t=============================\t\t\t\t\t");
+
         }
 
         private static void TelaLogin()
