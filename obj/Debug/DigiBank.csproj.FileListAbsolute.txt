@@ -1,0 +1,7 @@
+C:\Users\lucie\OneDrive\Área de Trabalho\Estudos\DigiBank\bin\Debug\DigiBank.exe.config
+C:\Users\lucie\OneDrive\Área de Trabalho\Estudos\DigiBank\bin\Debug\DigiBank.exe
+C:\Users\lucie\OneDrive\Área de Trabalho\Estudos\DigiBank\bin\Debug\DigiBank.pdb
+C:\Users\lucie\OneDrive\Área de Trabalho\Estudos\DigiBank\obj\Debug\DigiBank.csproj.AssemblyReference.cache
+C:\Users\lucie\OneDrive\Área de Trabalho\Estudos\DigiBank\obj\Debug\DigiBank.csproj.CoreCompileInputs.cache
+C:\Users\lucie\OneDrive\Área de Trabalho\Estudos\DigiBank\obj\Debug\DigiBank.exe
+C:\Users\lucie\OneDrive\Área de Trabalho\Estudos\DigiBank\obj\Debug\DigiBank.pdb
