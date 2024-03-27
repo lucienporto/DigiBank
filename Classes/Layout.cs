@@ -268,7 +268,7 @@ namespace DigiBank.Classes
                     Console.WriteLine("");
                     Console.WriteLine($"\tData:\t\t\t\t{extrato.Data.ToString("dd/MM/yyy HH:mm:ss")}");
                     Console.WriteLine($"\tTipo de movimentação:\t\t{extrato.Descricao}");
-                    Console.WriteLine($"\tTipo de movimentação:\t\tR${extrato.Valor}");
+                    Console.WriteLine($"\tValor:\t\t\t\tR${extrato.Valor}");
                     Console.WriteLine("\t-----------------------------------------------------------");
                     Console.WriteLine("");
                 }
@@ -319,7 +319,6 @@ namespace DigiBank.Classes
             }
             catch (FormatException erro)
             {
-                opcao = 0;
                 Console.WriteLine("\tOps! Encontramos um erro.");
                 Console.WriteLine("\tRedirecionando...");
                 Thread.Sleep(3000);
