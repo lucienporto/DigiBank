@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 
 namespace DigiBank.Classes
@@ -16,13 +17,18 @@ namespace DigiBank.Classes
 
             Console.Clear();
 
+            Console.WriteLine("\t--------------------------------------");
+            Console.WriteLine("\t|             DIGIBANK               |");
+            Console.WriteLine("\t--------------------------------------");
             Console.WriteLine("");
-            Console.WriteLine("\t\t\t\t\t\tDigite a opção desejada:\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t1. Criar conta\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t2. Entrar com CPF e Senha\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
+            Console.WriteLine("\tDigite a opção desejada:");
+            Console.WriteLine("");
+            Console.WriteLine("\t1. Criar conta");
+            Console.WriteLine("");
+            Console.WriteLine("\t2. Entrar com CPF e Senha");
+            Console.WriteLine("");
+            Console.WriteLine("\t3. Sair do programa");
+            Console.WriteLine("");
 
             try
             {
@@ -30,7 +36,9 @@ namespace DigiBank.Classes
             }
             catch (FormatException erro) 
             {
-                Console.WriteLine("");
+                Console.WriteLine("\tOps! Encontramos um erro, tente novamente.");
+                Thread.Sleep(3000);
+                TelaPrincipal();
             }
             switch (opcao)
             {
@@ -42,8 +50,14 @@ namespace DigiBank.Classes
                     TelaLogin();
                     break;
 
+                case 3:
+                    Console.WriteLine("\tEncerrando sistema...");
+                    break;
+
                 default:
-                    Console.WriteLine("Opção inválida!");
+                    Console.WriteLine("\tOpção inválida!");
+                    Thread.Sleep(1000);
+                    TelaPrincipal();
                     break;
             }     
         }
@@ -53,15 +67,15 @@ namespace DigiBank.Classes
             Console.Clear();
 
             Console.WriteLine("");
-            Console.WriteLine("\t\t\t\t\t\tDigite seu nome: \t\t\t\t\t");
+            Console.WriteLine("\tDigite seu nome:");
             string nome = Console.ReadLine();
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\tDigite seu CPF: \t\t\t\t\t");
+            Console.WriteLine("");
+            Console.WriteLine("\tDigite seu CPF:");
             string cpf = Console.ReadLine();
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\tDigite sua senha: \t\t\t\t\t");
+            Console.WriteLine("");
+            Console.WriteLine("\tDigite sua senha:");
             string senha = Console.ReadLine();
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
+            Console.WriteLine("");
 
             // Criar uma conta
             ContaCorrente contaCorrente = new ContaCorrente();
@@ -71,19 +85,15 @@ namespace DigiBank.Classes
             pessoa.SetCPF(cpf);
             pessoa.SetSenha(senha);
             pessoa.Conta = contaCorrente;
-
             pessoas.Add(pessoa);
 
             Console.Clear();
 
-            Console.WriteLine("\t\t\t\t\tConta cadastrada com sucesso!\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t=============================\t\t\t\t\t");
-
-            //Esperar 1s para ir para  tela logada
+            Console.WriteLine("");
+            Console.WriteLine("\tConta cadastrada com sucesso!");
             Thread.Sleep(1000);
 
             TelaContaLogada(pessoa);
-
         }
 
         private static void TelaLogin()
@@ -91,12 +101,11 @@ namespace DigiBank.Classes
             Console.Clear();
 
             Console.WriteLine("");
-            Console.WriteLine("\t\t\t\t\t\tDigite seu CPF: \t\t\t\t\t");
+            Console.WriteLine("\tDigite seu CPF:");
             string cpf = Console.ReadLine();
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\tDigite sua senha: \t\t\t\t\t");
+            Console.WriteLine("");
+            Console.WriteLine("\tDigite sua senha:");
             string senha = Console.ReadLine();
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
 
             // Logar no sistema
             Pessoa pessoa = pessoas.FirstOrDefault(x => x.CPF == cpf && x.Senha == senha);
@@ -111,17 +120,19 @@ namespace DigiBank.Classes
             {
                 Console.Clear();
 
-                Console.WriteLine("\t\t\t\t\tUsuário não cadastrado.\t\t\t\t\t");
-                Console.WriteLine("\t\t\t\t\t=======================\t\t\t\t\t");
-                Console.WriteLine();
-                Console.WriteLine();
+                Console.WriteLine("\tUsuário não cadastrado.");
+                Console.WriteLine("");
+                Console.WriteLine("\tRedirecionando...");
+                Thread.Sleep(2000);
+
+                TelaPrincipal();
             }
         }
 
         private static void TelaBoasVindas(Pessoa pessoa)
         {
             Console.WriteLine();
-            Console.WriteLine($"\t\t\tSeja bem vindo(a), {pessoa.Nome} | Banco: {pessoa.Conta.GetCodigoBanco()} | Agência: {pessoa.Conta.GetNumeroAgencia()} | Conta: {pessoa.Conta.GetNumeroConta()}");
+            Console.WriteLine($"\t\tSeja bem vindo(a), {pessoa.Nome} | Banco: {pessoa.Conta.GetCodigoBanco()} | Agência: {pessoa.Conta.GetNumeroAgencia()} | Conta: {pessoa.Conta.GetNumeroConta()}");
             Console.WriteLine();
         }
 
@@ -131,54 +142,56 @@ namespace DigiBank.Classes
 
             TelaBoasVindas(pessoa);
 
-            Console.WriteLine("\t\t\t\t\t\tDigite a opção desejada:\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t1. Realizar um depósito\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t2. Realizar um saque\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t3. Consultar saldo\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t4. Extrato\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t\t5. Sair\t\t\t\t\t");
-            Console.WriteLine("\t\t\t\t\t========================================\t\t\t\t");
+            Console.WriteLine("\tDigite a opção desejada:");
+            Console.WriteLine("");
+            Console.WriteLine("\t1. Realizar um depósito");
+            Console.WriteLine("");
+            Console.WriteLine("\t2. Realizar um saque");
+            Console.WriteLine("");
+            Console.WriteLine("\t3. Consultar saldo");
+            Console.WriteLine("");
+            Console.WriteLine("\t4. Extrato");
+            Console.WriteLine("");
+            Console.WriteLine("\t5. Sair");
+            Console.WriteLine("");
 
             try
             {
                 opcao = int.Parse(Console.ReadLine());
+                switch (opcao)
+                {
+                    case 1:
+                        TelaDeposito(pessoa);
+                        break;
+
+                    case 2:
+                        TelaSaque(pessoa);
+                        break;
+
+                    case 3:
+                        TelaSaldo(pessoa);
+                        break;
+
+                    case 4:
+                        TelaExtrato(pessoa);
+                        break;
+
+                    case 5:
+                        TelaPrincipal();
+                        break;
+
+                    default:
+                        Console.WriteLine("\tOpção inválida! Tente novamente.");
+                        Thread.Sleep(1000);
+                        TelaContaLogada(pessoa);
+                        break;
+                }
             }
-            catch (FormatException erro)
+            catch(FormatException erro)
             {
-                Console.WriteLine("");
-            }
-
-            switch (opcao)
-            {
-                case 1:
-                    TelaDeposito(pessoa);
-                    break;
-
-                case 2:
-                    TelaSaque(pessoa);
-                    break;
-
-                case 3:
-                    TelaSaldo(pessoa);
-                    break;
-
-                case 4:
-                    TelaExtrato(pessoa);
-                    break;
-
-                case 5:
-                    TelaPrincipal();
-                    break;
-
-                default:
-                    Console.Clear();
-                    Console.WriteLine("Opção inválida!");
-                    break;
+                Console.WriteLine("\tOps! Encontramos um erro, tente novamente");
+                Thread.Sleep(1000);
+                TelaContaLogada(pessoa);
             }
         }
 
@@ -187,9 +200,8 @@ namespace DigiBank.Classes
             Console.Clear();
             TelaBoasVindas(pessoa);
 
-            Console.WriteLine("\t\t\t\t\tDigite o valor do depósito:");
+            Console.WriteLine("\tDigite o valor do depósito:");
             double valor = double.Parse(Console.ReadLine());
-            Console.WriteLine("\t\t\t\t==============================");
 
             pessoa.Conta.Deposita(valor);
 
@@ -197,8 +209,7 @@ namespace DigiBank.Classes
             TelaBoasVindas(pessoa);
 
             Console.WriteLine("");
-            Console.WriteLine("\t\t\t\t\tDepósito realizado com sucesso!");
-            Console.WriteLine("\t\t\t\t==================================");
+            Console.WriteLine("\tDepósito realizado com sucesso!");
             Console.WriteLine("");
 
             VoltarLogado(pessoa);
@@ -209,9 +220,8 @@ namespace DigiBank.Classes
             Console.Clear();
             TelaBoasVindas(pessoa);
 
-            Console.WriteLine("\t\t\t\t\tDigite o valor do saque:");
+            Console.WriteLine("\tDigite o valor do saque:");
             double valor = double.Parse(Console.ReadLine());
-            Console.WriteLine("\t\t\t\t==============================");
 
             bool okSaque = pessoa.Conta.Saque(valor);
 
@@ -221,13 +231,11 @@ namespace DigiBank.Classes
             Console.WriteLine("");
             if (okSaque)
             {
-                Console.WriteLine("\t\t\t\t\tSaque realizado com sucesso!");
-                Console.WriteLine("\t\t\t\t==================================");
+                Console.WriteLine("\tSaque realizado com sucesso!");
             }
             else
             {
-                Console.WriteLine("\t\t\t\t\tSaldo insuficiente para esta operação.");
-                Console.WriteLine("\t\t\t\t========================================");
+                Console.WriteLine("\tSaldo insuficiente para esta operação.");
             }
             Console.WriteLine("");
 
@@ -239,8 +247,7 @@ namespace DigiBank.Classes
             Console.Clear();
             TelaBoasVindas(pessoa);
 
-            Console.WriteLine($"\t\t\t\t\tSeu saldo é: R${pessoa.Conta.ConsultaSaldo()}");
-            Console.WriteLine("\t\t\t\t================================");
+            Console.WriteLine($"\tSeu saldo é: R${pessoa.Conta.ConsultaSaldo()}");
             Console.WriteLine("");
             VoltarLogado(pessoa);
         }
@@ -259,23 +266,24 @@ namespace DigiBank.Classes
                 foreach(Extrato extrato in pessoa.Conta.Extrato())
                 {
                     Console.WriteLine("");
-                    Console.WriteLine($"\t\t\t\t\tData: {extrato.Data.ToString("dd/MM/yyy HH:mm:ss")}");
-                    Console.WriteLine($"\t\t\t\t\tTipo de movimentação: {extrato.Descricao}");
-                    Console.WriteLine($"\t\t\t\t\tTipo de movimentação: {extrato.Valor}");
-                    Console.WriteLine("\t\t\t\t============================================");
+                    Console.WriteLine($"\tData:\t\t\t\t{extrato.Data.ToString("dd/MM/yyy HH:mm:ss")}");
+                    Console.WriteLine($"\tTipo de movimentação:\t\t{extrato.Descricao}");
+                    Console.WriteLine($"\tTipo de movimentação:\t\tR${extrato.Valor}");
+                    Console.WriteLine("\t-----------------------------------------------------------");
                     Console.WriteLine("");
                 }
 
                 Console.WriteLine("");
-                Console.WriteLine($"\t\t\t\t\tSUB TOTAL: {total}");
-                Console.WriteLine("\t\t\t\t==============================");
+                Console.WriteLine($"\tSUB TOTAL:\t\t\tR${total}");
+                Console.WriteLine("");
                 Console.WriteLine("");
             }
             else
             {
                 //Mostrar msg que não há extrato
-                Console.WriteLine("\t\t\t\t\tNão há extrato a ser exibido.");
-                Console.WriteLine("\t\t\t\t===============================");
+                Console.WriteLine("\tNão há extrato a ser exibido.");
+                Console.WriteLine("");
+                Console.WriteLine("");
             }
 
             VoltarLogado(pessoa);
@@ -283,72 +291,40 @@ namespace DigiBank.Classes
 
         private static void VoltarLogado(Pessoa pessoa)
         {
-            Console.WriteLine("\t\t\t\t\tEntre com uma opção abaixo");
-            Console.WriteLine("\t\t\t\t==============================");
-            Console.WriteLine("\t\t\t\t\t1. Voltar para a minha conta");
-            Console.WriteLine("\t\t\t\t==============================");
-            Console.WriteLine("\t\t\t\t\t2. Sair");
-            Console.WriteLine("\t\t\t\t==============================");
+            Console.WriteLine("\tEntre com uma opção abaixo");
+            Console.WriteLine("");
+            Console.WriteLine("\t1. Voltar para a minha conta");
+            Console.WriteLine("");
+            Console.WriteLine("\t2. Sair");
 
             try
             {
                 opcao = int.Parse(Console.ReadLine());
+                switch (opcao)
+                {
+                    case 1:
+                        TelaContaLogada(pessoa);
+                        break;
+
+                    case 2:
+                        TelaPrincipal();
+                        break;
+
+                    default:
+                        Console.WriteLine("\tOpção inválida! Tente novamente.");
+                        Thread.Sleep(1000);
+                        VoltarLogado(pessoa);
+                        break;
+                }
             }
             catch (FormatException erro)
             {
-                Console.WriteLine("");
+                opcao = 0;
+                Console.WriteLine("\tOps! Encontramos um erro.");
+                Console.WriteLine("\tRedirecionando...");
+                Thread.Sleep(3000);
+                TelaPrincipal();
             }
-
-            switch (opcao)
-            {
-                case 1:
-                    TelaContaLogada(pessoa);
-                    break;
-
-                case 2:
-                    TelaPrincipal();
-                    break;
-
-                default:
-                    Console.WriteLine("Opção inválida!");
-                    break;
-            }
-
-        }
-
-        private static void VoltarDeslogado()
-        {
-            Console.WriteLine("\t\t\t\t\tEntre com uma opção abaixo");
-            Console.WriteLine("\t\t\t\t=================================");
-            Console.WriteLine("\t\t\t\t\t1. Voltar para o menu principal");
-            Console.WriteLine("\t\t\t\t=================================");
-            Console.WriteLine("\t\t\t\t\t2. Sair");
-            Console.WriteLine("\t\t\t\t=================================");
-
-            try
-            {
-                opcao = int.Parse(Console.ReadLine());
-            }
-            catch (FormatException erro)
-            {
-                Console.WriteLine("");
-            }
-
-            switch (opcao)
-            {
-                case 1:
-                    TelaPrincipal();
-                    break;
-
-                case 2:
-                    TelaPrincipal();
-                    break;
-
-                default:
-                    Console.WriteLine("Opção inválida!");
-                    break;
-            }
-
         }
     }
 }
