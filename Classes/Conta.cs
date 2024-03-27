@@ -1,4 +1,6 @@
 ﻿using DigiBank.Contratos;
+using System;
+using System.Collections.Generic;
 
 namespace DigiBank.Classes
 {
@@ -8,6 +10,7 @@ namespace DigiBank.Classes
         {
             this.NumeroAgencia = "0001";
             Conta.NumeroSerialConta++;
+            this.Movimentacoes = new List<Extrato>();
         }
         
         public double Saldo { get; protected set; }
@@ -17,6 +20,8 @@ namespace DigiBank.Classes
         public string NumeroConta { get; protected set; }
         public static int NumeroSerialConta { get; private set; }
 
+        private List<Extrato> Movimentacoes;
+
 
         public double ConsultaSaldo()
         {
@@ -25,6 +30,8 @@ namespace DigiBank.Classes
 
         public void Deposita(double valor)
         {
+            DateTime dataAtual = DateTime.Now;
+            this.Movimentacoes.Add(new Extrato(dataAtual, "Depósito", valor));
             this.Saldo += valor;
         }
 
@@ -33,6 +40,8 @@ namespace DigiBank.Classes
             if (valor > this.ConsultaSaldo())
                 return false;
 
+            DateTime dataAtual = DateTime.Now;
+            this.Movimentacoes.Add(new Extrato(dataAtual, "Saque", -valor));
             this.Saldo -= valor;
             return true;
         }
@@ -50,6 +59,11 @@ namespace DigiBank.Classes
         public string GetNumeroConta()
         {
             return this.NumeroConta;
+        }
+
+        public List<Extrato> Extrato()
+        {
+            return this.Movimentacoes;
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace DigiBank.Contratos
+﻿using DigiBank.Classes;
+using System.Collections.Generic;
+
+namespace DigiBank.Contratos
 {
     public interface Iconta
     {
@@ -13,5 +16,7 @@
         string GetNumeroAgencia();
 
         string GetNumeroConta();
+
+        List<Extrato> Extrato();
     }
 }
